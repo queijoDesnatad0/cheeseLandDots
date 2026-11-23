@@ -1,0 +1,118 @@
+-- Keybinds Configuration --
+
+-- Default Proegrams --
+local daw =             "~/Applications/LYNX-0.1.29-alpha-x86_64_1c9318af976bb60a781dd1b255ad2183.AppImage"
+local ide =             "codium"
+local shell =           "pkill waybar || waybar"
+local minezin =         "~/Applications/PrismLauncher-Linux-x86_64_bf9fbc88c730d653940bccad88ade13a.AppImage"
+local logoff =          "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
+local browser =         "firefox"
+local terminal =        "kitty"
+local launcher =        "pkill wofi || wofi --show drun"
+local wallpaper =       "pkill hyprpaper || hyprpaper"
+local fullprint =       "grim ~/Imagens/prints/print_$(date +%Y%m%d_%H%M%S).png"
+local fileManager =     "nautilus"
+local regionPrint =     "grim -g $(slurp) ~/Imagens/prints/print_$(date +%Y%m%d_%H%M%S).png"
+
+-- Main Modifyer (super is "windows" key) --
+local mainMod = "SUPER"
+
+-- Program Execution --
+hl.bind(mainMod .. " + Insert",     hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Delete",  hl.dsp.window.close())
+
+hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(launcher))
+
+-- The FBI!!! :O --
+hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(minezin))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(daw))
+
+
+-- Status Bar & Wallpaper --
+hl.bind(mainMod .. " + End",             hl.dsp.exec_cmd(shell))
+hl.bind(mainMod .. " + ALT + End",   hl.dsp.exec_cmd(wallpaper))
+
+-- Log Off --
+hl.bind("CONTROL + ALT + Delete", hl.dsp.exec_cmd(logoff))
+
+-- Window Control --
+
+-- Focus --
+hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
+
+-- Move --
+hl.bind(mainMod .. " + CONTROL + left",  hl.dsp.window.move({ direction = "left" }))
+hl.bind(mainMod .. " + CONTROL + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(mainMod .. " + CONTROL + up",    hl.dsp.window.move({ direction = "up" }))
+hl.bind(mainMod .. " + CONTROL + down",  hl.dsp.window.move({ direction = "down" }))
+
+-- Resize & Float --
+hl.bind(mainMod .. " + ALT + right", hl.dsp.window.resize({ x = 25,  y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + left",  hl.dsp.window.resize({ x = -25, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + up",    hl.dsp.window.resize({ x = 0, y = 25,  relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + down",  hl.dsp.window.resize({ x = 0, y = -25, relative = true }), { repeating = true })
+
+hl.bind(mainMod .. " + Slash",     hl.dsp.window.fullscreen())
+hl.bind(mainMod .. " + Period",    hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + Comma",     hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + Semicolon", hl.dsp.layout("togglesplit"))
+
+-- Workspace Control --
+for i = 1, 10 do
+    local ws = i % 10
+    hl.bind(mainMod .. " + " .. ws,             hl.dsp.focus({ workspace = i}))
+    hl.bind(mainMod .. " + CONTROL + " .. ws,     hl.dsp.window.move({ workspace = i }))
+end
+
+hl.bind(mainMod .. " + Home",            hl.dsp.workspace.toggle_special("Home"))
+hl.bind(mainMod .. " + CONTROL + Home",  hl.dsp.window.move({ workspace = "special:Home" }))
+
+hl.bind(mainMod .. " + Page_Up",     hl.dsp.focus({ workspace = "-1" }))
+hl.bind(mainMod .. " + Page_Down",   hl.dsp.focus({ workspace = "+1" }))
+hl.bind(mainMod .. " + CONTROL + Page_Up",   hl.dsp.window.move({ workspace = "-1" }))
+hl.bind(mainMod .. " + CONTROL + Page_Down", hl.dsp.window.move({ workspace = "+1" }))
+
+-- Mouse Binds --
+hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "-1" }))
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "+1" }))
+hl.bind(mainMod .. " + CONTROL +  mouse_up",   hl.dsp.window.move({ workspace = "-1" }))
+hl.bind(mainMod .. " + CONTROL +  mouse_down", hl.dsp.window.move({ workspace = "+1" }))
+
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(mainMod .. " + mouse:274", hl.dsp.window.close())
+
+-- Misc --
+
+hl.bind("Print", hl.dsp.exec_cmd(fullprint))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(regionPrint))
+
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+
+hl.bind(mainMod .. " + F1",     hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+hl.bind(mainMod .. " + F2",     hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
+hl.bind(mainMod .. " + F8",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
+hl.bind(mainMod .. " + F9",     hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
+hl.bind(mainMod .. " + F11",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
+hl.bind(mainMod .. " + F12",    hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+
+
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+
+hl.bind(mainMod .. " + F2 ",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+hl.bind(mainMod .. " + F3 ",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+hl.bind(mainMod .. " + F10 ",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
