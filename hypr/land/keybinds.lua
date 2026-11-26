@@ -1,25 +1,28 @@
 -- Keybinds Configuration --
 
 -- Default Proegrams --
-local daw =             "~/Applications/LYNX-0.1.29-alpha-x86_64_1c9318af976bb60a781dd1b255ad2183.AppImage"
+-- local daw =             "your path to your daw(or name)"
 local ide =             "codium"
 local shell =           "pkill waybar || waybar"
-local minezin =         "~/Applications/PrismLauncher-Linux-x86_64_bf9fbc88c730d653940bccad88ade13a.AppImage"
+-- local minezin =         "your path for your mine launcher(or name)"
 local logoff =          "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
 local browser =         "firefox"
 local terminal =        "kitty"
-local launcher =        "pkill wofi || wofi --show drun"
+local launcher =        "pkill rofi || rofi -show drun"
 local wallpaper =       "pkill hyprpaper || hyprpaper"
 local fullprint =       "grim ~/Imagens/prints/print_$(date +%Y%m%d_%H%M%S).png"
 local fileManager =     "nautilus"
 local regionPrint =     "grim -g $(slurp) ~/Imagens/prints/print_$(date +%Y%m%d_%H%M%S).png"
+local lockScreen =      "hyprlock"
 
 -- Main Modifyer (super is "windows" key) --
 local mainMod = "SUPER"
 
 -- Program Execution --
 hl.bind(mainMod .. " + Insert",     hl.dsp.exec_cmd(terminal))
+
 hl.bind(mainMod .. " + Delete",  hl.dsp.window.close())
+hl.bind(mainMod .. " + W",  hl.dsp.window.close())
 
 hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(launcher))
 
@@ -27,8 +30,9 @@ hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(launcher))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(minezin))
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(daw))
+--hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(daw))
+--hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(minezin))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lockScreen))
 
 
 -- Status Bar & Wallpaper --
@@ -116,3 +120,22 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.bind(mainMod .. " + F2 ",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind(mainMod .. " + F3 ",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 hl.bind(mainMod .. " + F10 ",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+
+hl.bind(mainMod .. " + tab", function ()
+    local layouts   = { "scrolling", "dwindle" }
+    local next_layout
+
+    local workspace = hl.get_active_special_workspace() or hl.get_active_workspace()
+    if not workspace then return end
+
+    for i = 1, #layouts do
+        if layouts[i] == workspace.tiled_layout then
+            next_layout = layouts[ i % #layouts + 1 ]
+            goto dispatch
+        end
+    end
+
+    ::dispatch::
+    hl.workspace_rule({ workspace = workspace.addressable_name, layout = next_layout })
+end)
+
