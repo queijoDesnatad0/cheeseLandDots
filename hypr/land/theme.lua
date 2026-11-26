@@ -27,8 +27,12 @@ hl.config({
 
 		blur = {
 			enabled = true,
-			size = 7,
+
+			size = 4,
 			passes = 0,
+			
+			special = false,
+			variant = "acrylic",
 		},
 
 		shadow = {
