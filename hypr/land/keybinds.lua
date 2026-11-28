@@ -2,26 +2,33 @@
 
 -- Default Proegrams --
 -- local daw =             "your path to your daw(or name)"
-local ide =             "codium"
-local shell =           "pkill waybar || waybar"
 -- local minezin =         "your path for your mine launcher(or name)"
+
+local ide =             "codium"
 local logoff =          "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"
 local browser =         "firefox"
 local terminal =        "kitty"
 local launcher =        "pkill rofi || rofi -show drun"
+local statusBar =       "pkill waybar || waybar"
 local wallpaper =       "pkill hyprpaper || hyprpaper"
 local fullprint =       "grim ~/Imagens/prints/print_$(date +%Y%m%d_%H%M%S).png"
+local lockScreen =      "hyprlock"
 local fileManager =     "nautilus"
 local regionPrint =     "grim -g $(slurp) ~/Imagens/prints/print_$(date +%Y%m%d_%H%M%S).png"
-local lockScreen =      "hyprlock"
+local sessionMenu =     "nwg-bar"
+local desktopShell =    "pkill quickshell || quickshell"
 
 -- Main Modifyer (super is "windows" key) --
 local mainMod = "SUPER"
 
 -- Program Execution --
 hl.bind(mainMod .. " + Insert",     hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Return",     hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + KP_Enter",     hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + Q",     hl.dsp.exec_cmd(terminal))
 
 hl.bind(mainMod .. " + Delete",  hl.dsp.window.close())
+hl.bind(mainMod .. " + Backspace",  hl.dsp.window.close())
 hl.bind(mainMod .. " + W",  hl.dsp.window.close())
 
 hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(launcher))
@@ -30,17 +37,19 @@ hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(launcher))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lockScreen))
 --hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(daw))
 --hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(minezin))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lockScreen))
 
 
 -- Status Bar & Wallpaper --
-hl.bind(mainMod .. " + End",             hl.dsp.exec_cmd(shell))
-hl.bind(mainMod .. " + ALT + End",   hl.dsp.exec_cmd(wallpaper))
+hl.bind(mainMod .. " + End",            hl.dsp.exec_cmd(wallpaper))
+hl.bind(mainMod .. " + ALT + End",      hl.dsp.exec_cmd(statusBar))
+hl.bind(mainMod .. " + CONTROL + End",  hl.dsp.exec_cmd(desktopShell))
 
 -- Log Off --
 hl.bind("CONTROL + ALT + Delete", hl.dsp.exec_cmd(logoff))
+hl.bind("ALT + F4", hl.dsp.exec_cmd(sessionMenu))
 
 -- Window Control --
 
