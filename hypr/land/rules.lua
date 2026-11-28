@@ -1,18 +1,34 @@
+hl.layer_rule({
+	name = "NoBlur",
+
+	match =		{ namespace = "waybar" },
+	blur =		false,
+})
+
+hl.layer_rule({
+	name = "ShellBlur",
+
+	match =		{ namespace = "quickshell" },
+	blur =		true,
+})
+
 local suppressMaximizeRule = hl.window_rule({
 	name = "suppress-maximize-events",
-	match = { class = ".*" },
-	suppress_event = "maximize",
+	
+	match =				{ class = ".*" },
+	suppress_event =	"maximize",
 })
 
 hl.window_rule({
 	name = "fix-xwayland-drags",
+	
 	match = {
-		class = "^$",
-		title = "^$",
-		xwayland = true,
-		float = true,
-		fullscreen = false,
-		pin = false,
+		class =			"^$",
+		title =			"^$",
+		xwayland =		true,
+		float =			true,
+		fullscreen =	false,
+		pin =			false,
 	},
 
 	no_focus = true,
@@ -20,16 +36,12 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "move-hyprland-run",
-	match = { class = "hyprland-run" },
-	move = "20 monitor_h-120",
-	float = true,
+	
+	match =		{ class = "hyprland-run" },
+	move =		"20 monitor_h-120",
+	float =		true,
 })
 
-hl.layer_rule({
-	name = LayerBlur,
-	match = { class = "quickshell", "waybar", "rofi"},
-	blur = true
-})
 
 for i = 1, 5 do
     hl.workspace_rule({
