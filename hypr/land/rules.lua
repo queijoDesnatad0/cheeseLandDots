@@ -1,7 +1,7 @@
 hl.layer_rule({
 	name = "NoBlur",
 
-	match =		{ namespace = "waybar" },
+	match =		{ namespace = "waybar", "rofi" },
 	blur =		false,
 })
 
